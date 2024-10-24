@@ -1,6 +1,6 @@
 # Parallel-CDM
 
-This repository contains a parallel computational damage mechanics (CDM) MATLAB code. We utilize parallelization techniques in order to significantly accelerate CDM simulations. This an updated parallel code, see the original https://github.com/roshanphilip/UAL-codes. The package can be used with UAL solver (https://doi.org/10.1007/s00466-024-02473-5) or Newton-Raphson, and for local or non-local gradient damage.
+This repository contains a parallel computational damage mechanics (CDM) MATLAB code. We utilize parallelization techniques in order to significantly accelerate CDM simulations. This an updated parallel code, see the original https://github.com/roshanphilip/UAL-codes. The package can be used with UAL solver (https://doi.org/10.1007/s00466-024-02473-5) or Newton-Raphson, and for local or non-local gradient damage. The mesh files are set to the UAL solver and non-local gradient damage by default.
 
 We invite you to try out different continuum damage mechanics problems using this parallel code.
 
