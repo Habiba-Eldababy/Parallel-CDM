@@ -23,7 +23,8 @@ affiliations:
  - index: 2
    name: Mechanical Engineering Department, New York University Abu Dhabi, P.O. Box 129188, Abu Dhabi, UAE
  - index: 3
-   name:Civil and Urban Engineering Department, New York University Abu Dhabi, P.O. Box 129188, Abu Dhabi, UAE
+   name: Civil and Urban Engineering Department, New York University Abu Dhabi, P.O. Box 129188, Abu Dhabi, UAE
+   
 date: 8 October, 2024
 bibliography: paper.bib
 ---
