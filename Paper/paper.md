@@ -19,13 +19,13 @@ authors:
 
 affiliations:
  - index: 1
-   name: Mechanical Engineering Department, Tandon School of Engineering, New York University, 6 MetroTech Center, Brooklyn, NY 11201, USA 
+   name: Mechanical Engineering Department, Tandon School of Engineering, New York University, USA 
  
  - index: 2
-   name: Mechanical Engineering Department, New York University Abu Dhabi, P.O. Box 129188, Abu Dhabi, UAE
+   name: Mechanical Engineering Department, New York University Abu Dhabi, UAE
  
  - index: 3
-   name: Civil and Urban Engineering Department, New York University Abu Dhabi, P.O. Box 129188, Abu Dhabi, UAE
+   name: Civil and Urban Engineering Department, New York University Abu Dhabi, UAE
    
 date: 24 October, 2024
 bibliography: paper.bib
@@ -49,7 +49,7 @@ The results of the coarse mesh analysis on the Dell G15 laptop are shown in \aut
 
 ![Figure 3. a. SSNT geometry and loading conditions, b. and c. Force-displacement curve and damage contours of the final load increment using a coarse mesh.\label{fig:schematics}](combofig_schematic_f-d_contours.png)
 
-![Figure 4. Time for the first 5 iterations of the “globalstiffness” function in serial, parallel process-based, and parallel thread-based runs. \label{fig:threads_vs_processes_coarse_dell}](threads_vs_processes_coarse_dell.png){ width=50% }
+![Figure 4. Time for the first 5 iterations of the “globalstiffness” function in serial, parallel process-based, and parallel thread-based runs. \label{fig:threads_vs_processes_coarse_dell}](threads_vs_processes_coarse_dell.png){width=20%}
 
 Next, using the thread-based environment, we compare the performance on the Dell laptop and the workstation across the three mesh-refinement levels. The results are shown in \autoref{fig:laptop_vs_workstation_allmesh}.  We observe that the laptop is considerably faster than the workstation for the coarse mesh, but as the mesh size increases the workstation becomes more efficient. We also observe from \autoref{fig:laptop_vs_workstation_allmesh} that with larger mesh sizes and additional threads, the memory is a limiting factor such that the workstation is more suitable than the laptop due to the larger memory. 
 
@@ -57,7 +57,7 @@ Next, using the thread-based environment, we compare the performance on the Dell
 
 In \autoref{fig:threads_totalruntime_HPC} we present the total runtime of the fine mesh on the HPC cluster, for serial and parallel implementation. From this figure, it is clear that the parallelization exhibits significant cost improvement, with a 3 times reduction in the total runtime of the code for a serial computation to parallel with 8, 16, or 32 threads. Above 32 threads, \autoref{fig:threads_totalruntime_HPC} reveals that additional parallel resources do not provide further improvement for the size of this problem. When pursuing faster runtimes with parallel computing, the overhead costs should be weighed against potential improvement in speed. 
 
-![Figure 6. Total runtime using fine mesh on HPC. The number of threads is represented on a logarithmic scale for clarity. Additional parallel resources reduce the runtime of a fine mesh on the HPC cluster. \label{fig:threads_totalruntime_HPC}](threads_totalruntime_HPC.png){ width=50% }
+![Figure 6. Total runtime using fine mesh on HPC. The number of threads is represented on a logarithmic scale for clarity. Additional parallel resources reduce the runtime of a fine mesh on the HPC cluster. \label{fig:threads_totalruntime_HPC}](threads_totalruntime_HPC.png){width=20%}
 
 Simpler codes will often demonstrate slower runtimes with parallelization. In addition, memory constraints pose a limiting effect on the observed speedup from parallelization, particularly where the mesh is large in comparison with the device memory. Moreover, other tactics used to speed up this code involve efficient plotting techniques, vectorization, and reduced memory usage through sparse matrices.  
 
