@@ -50,7 +50,7 @@ elseif SolverID == 2 % For non-local gradient  model
 
     % ID of the free and prescribed nodes (for nl_strain calculations only)
     ID_prescribed_nodes_e=unique(fixnodes(1,:));
-    X=[1:size(ID_dofs_list_nl_strain,1)];
+    X = [1:size(ID_dofs_list_nl_strain,1)];
     ID_free_nodes_e=X;
     ID_free_nodes_e(ID_prescribed_nodes_e)=[];
 
