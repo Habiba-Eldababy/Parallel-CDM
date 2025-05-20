@@ -1,4 +1,4 @@
-function [k_el, j_el, kappa_el, gausspoints_prop_mat_elem, nodes_prop_mat_elem, residual_el, f_internal_el, f_external_el] = func_elstif_Nonlocgradient(model_name,lmncoord,dofs,Delastic,kappa_el_previousinc,g,alpha_val,beta_val,e_delta,dmax,strain_tolerance,n_hood,weights,IsM,IsProj)
+function [k_el, j_el, kappa_el, gausspoints_prop_mat_elem, nodes_prop_mat_elem, residual_el, f_internal_el, f_external_el] = func_elstif_Nonlocgradient(Damage_type, nu, k_damage_parameter,eq_strain_type,lmncoord,dofs,Delastic,kappa_el_previousinc,g,alpha_val,beta_val,e_delta,dmax,strain_tolerance,n_hood,weights,IsM,IsProj)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ============ ELEMENT STIFFNESS MATRIX & INTERNAL FORCE VECTOR ===========
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,11 +70,14 @@ if IsProj == 0
         gxy = strain_vec_gxy(3,1);
         
         % Calculate the equivalent strain e_star and the derivatives {s}
-        if model_name =='SNS'
-            [e_star,s] = func_estar_shear(exx, eyy, gxy);
-        else
+        if eq_strain_type == 1
             [e_star,s] = func_estar(exx, eyy, gxy);
+        elseif eq_strain_type == 2
+            [e_star,s] = func_estar_shear(exx, eyy, gxy);
+        elseif eq_strain_type == 3
+            [e_star, s] = func_estar_deVree(exx, eyy, gxy, k_damage_parameter, nu);
         end
+
         local_strain_el(1,integ_point) = e_star;
     
         % Add NaN condition for [s]
@@ -86,13 +89,18 @@ if IsProj == 0
         nonlocal_strain_el(1,integ_point) = N' * dofs_e_vec; % Size: 1x1
     
     
-        % =================== MAZAR MODEL IMPLEMENTATION ======================
+        % ================== DAMAGE MODEL IMPLEMENTATION ======================
         % Calculate the following variables for each Gauss point:
         % a) nonlocal equivalent strain history parameter (kappa)
         % b) damage variable (omega) 
         % c) gradient of omega w.r.t kappa (domega_dkappa)
-        [kappa, omega, domega_dkappa] = func_mazarmodel_Nonlocgradient(nonlocal_strain_el(1,integ_point),kappa_el_previousinc(1,integ_point),alpha_val,beta_val,e_delta,dmax,strain_tolerance,IsM);
         
+        if Damage_type == 1 % Mazars damage model
+            [kappa, omega, domega_dkappa] = func_mazarmodel_Nonlocgradient(nonlocal_strain_el(1,integ_point),kappa_el_previousinc(1,integ_point),alpha_val,beta_val,e_delta,dmax,strain_tolerance,IsM);
+        elseif Damage_type == 2 % Geers damage model
+            [kappa, omega, domega_dkappa] = func_geersmodel_Nonlocgradient(nonlocal_strain_el(1,integ_point),kappa_el_previousinc(1,integ_point),alpha_val,beta_val,e_delta,dmax,strain_tolerance,IsM);
+        end
+
         % Store the output of the Mazar model to the appropriate element vectors
         kappa_el(1,integ_point)  = kappa;
         damage_el(1,integ_point) = omega;
@@ -231,26 +239,35 @@ elseif IsProj == 1
         exy = gxy/2;
         
         % Calculate the equivalent strain e_star and the derivatives {s}
-        if model_name =='SNS'
-            [e_star,~] = func_estar_shear(exx, eyy, gxy);
-        else
+        if eq_strain_type == 1
             [e_star,~] = func_estar(exx, eyy, gxy);
+        elseif eq_strain_type == 2
+            [e_star,~] = func_estar_shear(exx, eyy, gxy);
+        elseif eq_strain_type == 3
+            [e_star, ~] = func_estar_deVree(exx, eyy, gxy, k_damage_parameter, nu);
         end
+
+
         local_strain_el(1,integ_point) = e_star;
-    
+
         
         % ================== NON-LOCAL STRAIN CALCULATIONS ====================
         % Compute and store the nonlocal equivalent strain for each Gauss Point
         nonlocal_strain_el(1,integ_point) = N' * dofs_e_vec; % Size: 1x1
     
     
-        % =================== MAZAR MODEL IMPLEMENTATION ======================
+        % =================== DAMAGE MODEL IMPLEMENTATION =====================
         % Calculate the following variables for each Gauss point:
         % a) nonlocal equivalent strain history parameter (kappa)
         % b) damage variable (omega) 
         % c) gradient of omega w.r.t kappa (domega_dkappa)
-        [~, omega, ~] = func_mazarmodel_Nonlocgradient(nonlocal_strain_el(1,integ_point),kappa_el_previousinc(1,integ_point),alpha_val,beta_val,e_delta,dmax,strain_tolerance,IsM);
-        
+
+        if Damage_type == 1 % Mazars damage model
+            [~, omega, ~] = func_mazarmodel_Nonlocgradient(nonlocal_strain_el(1,integ_point),kappa_el_previousinc(1,integ_point),alpha_val,beta_val,e_delta,dmax,strain_tolerance,IsM);
+        elseif Damage_type == 2 % Geers damage model
+            [~, omega, ~] = func_geersmodel_Nonlocgradient(nonlocal_strain_el(1,integ_point),kappa_el_previousinc(1,integ_point),alpha_val,beta_val,e_delta,dmax,strain_tolerance,IsM);
+        end
+
         % Store the output of the Mazar model to the appropriate element vectors
         damage_el(1,integ_point) = omega;
     
