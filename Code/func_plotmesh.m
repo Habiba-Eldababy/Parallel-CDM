@@ -1,9 +1,12 @@
-function onepatch_func_plotmesh2(coords,connect_nds,nelem,damage,elocal,enonlocal,nelnodes,color,model_name,inc_success_counter,last_iteration,increment,loadfactor,solver_string,tangent_string,SolverID)
+function func_plotmesh(coords,connect_nds,nelem,damage,elocal,enonlocal,nelnodes,color,model_name,inc_success_counter,last_iteration,increment,loadfactor,solver_string,tangent_string,SolverID,image_path,main_file_path)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % =============================== PLOTTING ================================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f1 = figure("Position",[400 200 1500 500]);
+
+cd(image_path);
+
+f1 = figure("Position",[400 200 1500 500],"Visible","off");
 t = tiledlayout(1,3,'TileSpacing','compact');
 % title(t, strcat(model_name + ": Increment #" + int2str(increment) + " - Iteration #" + int2str(last_iteration) + " - Loadfactor " + int2str(loadfactor)), 'interpreter','latex','fontsize',12,'Color','k');
 
@@ -115,18 +118,6 @@ end
 
 saveas(f1, strcat(model_name + "_contours_" + solver_string + "_" + tangent_string + "_inc_" + int2str(increment) + ".png"))
 
+cd(main_file_path);
 
-% %--------------------------------------------------------------------------
-% % --------------------- PLOTTING FORCE-DISPLACEMENT -----------------------
-% % -------------------------------------------------------------------------
-% f2 = figure("Position",[400 200 1500 800]);
-% hold on;
-% plot(plot_storage(:,1),plot_storage(:,2))
-% title("Force-Displacement using UAL w/ nonlocal gradient damage")
-% 
-% saveas(f2, strcat(model_name + "_force_disp_" + solver_string + "_" + tangent_string + "_inc_" + int2str(increment) + ".png"))
-
-% close all 
 end
-
-
