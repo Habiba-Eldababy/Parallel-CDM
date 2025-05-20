@@ -3,7 +3,8 @@ function [SolverID,TangentID,RoutineID,ncoord,ndof,lc, ...
             loadfactor,dlfactor,dlfactor_incr_threshold,increment_plot_threshold,loadfactor_plot_threshold, ...
             flaglf,countflaglf,incrflag,flagplot, ...
             ndomains,nprops,materialprops,alpha_val,beta_val,e_delta,dmax, ...
-            nnodes,coords,nelem,maxnodes,connect,nelnodes,elident_vec,nfix,fixnodes,ArcLength_0,Constraint_type,delta_m_bar_0,Applied_Force_Load] = func_read_input_file(infile) 
+            nnodes,coords,nelem,maxnodes,connect,nelnodes,elident_vec,nfix,fixnodes,ArcLength_0,Constraint_type,delta_m_bar_0,Applied_Force_Load, ...
+            tolerance,ArcLength_upper_limit,ArcLength_lower_limit,Scheme_ID,ST,max_failed_attempts,direction_load,reaction_calc,eq_strain_type,Damage_type,k_damage_parameter] = func_read_input_file(infile) 
 
 % ================== READ THE INPUT FILE WITH THE PARAMETERS ==============
 
@@ -69,6 +70,28 @@ cellnumber                  = cellnumber + 2;
 delta_m_bar_0               = str2double(model_parameters_cellarray{1}{cellnumber});
 cellnumber                  = cellnumber + 2;
 Applied_Force_Load          = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+tolerance                   = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+ArcLength_upper_limit       = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+ArcLength_lower_limit       = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+Scheme_ID                   = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+ST                          = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+max_failed_attempts         = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+direction_load              = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+reaction_calc               = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+eq_strain_type              = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+Damage_type                 = str2double(model_parameters_cellarray{1}{cellnumber});
+cellnumber                  = cellnumber + 2;
+k_damage_parameter          = str2double(model_parameters_cellarray{1}{cellnumber});
 
 % -------------------------------------------------------------------------
 % Number of domains
@@ -155,6 +178,3 @@ end
 
     
 end
-
-
-
