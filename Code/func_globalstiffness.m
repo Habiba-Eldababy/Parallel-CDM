@@ -1,4 +1,4 @@
-function [K, J, DRdu, Res_F, F_int, F_ext, history_var_mat, gausspoints_prop_mat, nodes_prop_mat, strain_var_mat] = parallel_func_globalstiffness(model_name,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_mat_previousinc,IsProj,RoutineID)
+function [K, J, DRdu, Res_F, F_int, F_ext, history_var_mat, gausspoints_prop_mat, nodes_prop_mat, strain_var_mat] = func_globalstiffness(Damage_type,k_damage_parameter,eq_strain_type,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_mat_previousinc,IsProj,RoutineID)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ====================== ASSEMBLE THE TANGENT MATRIX ======================
 % ===================== ASSEMBLE THE RESIDUAL VECTOR ======================
@@ -6,16 +6,15 @@ function [K, J, DRdu, Res_F, F_int, F_ext, history_var_mat, gausspoints_prop_mat
 % Include global variables
 func_include_flags;
 
+% Extract Poissons ratio
+nu = materialprops(2);
+
+
 % Variables strain_var_mat and strain_mat_previousinc are only active in
 % the UAL local damage case
-if RoutineID == 2 || RoutineID == 3 || SolverID == 2
+if RoutineID == 2 || SolverID == 2
     strain_var_mat = [];
     strain_mat_previousinc = zeros(size(history_var_mat_previousinc,1),size(history_var_mat_previousinc,2));
-end
-
-% Calculate the local damage matrix for the nonlocal integral method
-if SolverID == 3
-    [damage_mat_it] = func_localdamagemat(dofs);
 end
 
 if IsProj == 0
@@ -69,14 +68,10 @@ if IsProj == 0
             if local_TangentID == 1
                 if local_SolverID == 1
                     [k_el, j_el, local_history_var_mat(lmn, :), local_strain_var_mat(lmn, :), ~, ~, Res_F_el, f_internal_el, f_external_el] = ...
-                        func_elstif_Local(model_name, lmncoord, lmndof, Delastic, history_var_mat_previousinc(lmn, :), local_alpha_val, local_beta_val, local_e_delta, local_dmax, n_hood, weights, strain_tolerance, local_strain_mat_previousinc(lmn, :), 1, IsProj, RoutineID);
+                        func_elstif_Local(Damage_type, nu, k_damage_parameter,eq_strain_type, lmncoord, lmndof, Delastic, history_var_mat_previousinc(lmn, :), local_alpha_val, local_beta_val, local_e_delta, local_dmax, n_hood, weights, strain_tolerance, local_strain_mat_previousinc(lmn, :), 1, IsProj, RoutineID);
                 elseif local_SolverID == 2
                     [k_el, j_el, local_history_var_mat(lmn, :), ~, ~, Res_F_el, f_internal_el, f_external_el] = ...
-                        func_elstif_Nonlocgradient(model_name, lmncoord, lmndof, Delastic, history_var_mat_previousinc(lmn, :), local_g, local_alpha_val, local_beta_val, local_e_delta, local_dmax, strain_tolerance, n_hood, weights, 1, IsProj);
-                elseif local_SolverID == 3
-                    [local_damage_mat_it] = func_localdamagemat(dofs);
-                    [j_el, local_history_var_mat(lmn, :), ~, ~, Res_F_el, f_external_el] = ...
-                        func_elstif_Nonlocintegral(lmn, lmncoord, lmndof, Delastic, history_var_mat_previousinc(lmn, :), local_alpha_val, local_beta_val, local_e_delta, local_dmax, n_hood, weights, local_damage_mat_it, 1, IsProj);
+                        func_elstif_Nonlocgradient(Damage_type, nu, k_damage_parameter,eq_strain_type, lmncoord, lmndof, Delastic, history_var_mat_previousinc(lmn, :), local_g, local_alpha_val, local_beta_val, local_e_delta, local_dmax, strain_tolerance, n_hood, weights, 1, IsProj);
                 else
                     disp("Check your SolverID - globalstiffness")
                 end
@@ -156,10 +151,7 @@ elseif IsProj == 1
     % Create local copies of global variables for parfor loop
     local_alpha_val = alpha_val; local_SolverID = SolverID; local_beta_val = beta_val; local_e_delta = e_delta; local_dmax = dmax; local_nelnodes = nelnodes; local_connect_nds = connect_nds;
     local_strain_mat_previousinc = strain_mat_previousinc; local_nelem = nelem; local_g = g;
-    if local_SolverID == 3
-        local_damage_mat_it = damage_mat_it;
-    end
-
+    
     % Initializing element/nodal properties and gather matrices at zero
     gausspoints_prop_mat = zeros(nelem * func_numberofintegrationpoints,9);
     nodes_prop_mat       = zeros(nnodes,9);
@@ -195,14 +187,10 @@ elseif IsProj == 1
         % Compute element/nodal properties
         % -----------------------------------------------------------------
         if local_SolverID == 1
-            [~, ~, ~, ~, temp_gausspoints_prop_mat_elem, nodes_prop_mat_elem, ~, ~, ~] = func_elstif_Local(model_name,lmncoord,lmndof,Delastic,history_var_mat_previousinc(lmn,:),local_alpha_val,local_beta_val,local_e_delta,local_dmax,n_hood,weights,strain_tolerance,local_strain_mat_previousinc(lmn,:),1,IsProj,RoutineID);
+            [~, ~, ~, ~, temp_gausspoints_prop_mat_elem, nodes_prop_mat_elem, ~, ~, ~] = func_elstif_Local(Damage_type, nu, k_damage_parameter,eq_strain_type,lmncoord,lmndof,Delastic,history_var_mat_previousinc(lmn,:),local_alpha_val,local_beta_val,local_e_delta,local_dmax,n_hood,weights,strain_tolerance,local_strain_mat_previousinc(lmn,:),1,IsProj,RoutineID);
             %------------------------------------------------------------------
         elseif local_SolverID == 2
-            [~, ~, ~, temp_gausspoints_prop_mat_elem, nodes_prop_mat_elem, ~, ~, ~] = func_elstif_Nonlocgradient(model_name,lmncoord,lmndof,Delastic,history_var_mat_previousinc(lmn,:),local_g,local_alpha_val,local_beta_val,local_e_delta,local_dmax,strain_tolerance,n_hood,weights,1,IsProj);
-            % -----------------------------------------------------------------
-        elseif local_SolverID == 3
-            [local_damage_mat_it] = func_localdamagemat(dofs);
-            [~, ~, temp_gausspoints_prop_mat_elem, nodes_prop_mat_elem,~,~] = func_elstif_Nonlocintegral(lmn,lmncoord,lmndof,Delastic,history_var_mat_previousinc(lmn,:),alpha_val,beta_val,e_delta,dmax,n_hood,weights,local_damage_mat_it,1,IsProj);
+            [~, ~, ~, temp_gausspoints_prop_mat_elem, nodes_prop_mat_elem, ~, ~, ~] = func_elstif_Nonlocgradient(Damage_type, nu, k_damage_parameter,eq_strain_type,lmncoord,lmndof,Delastic,history_var_mat_previousinc(lmn,:),local_g,local_alpha_val,local_beta_val,local_e_delta,local_dmax,strain_tolerance,n_hood,weights,1,IsProj);
             % -----------------------------------------------------------------
         else
             disp("Check your SolverID - globalstiffness")
