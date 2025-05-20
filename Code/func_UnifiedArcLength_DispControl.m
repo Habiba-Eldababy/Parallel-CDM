@@ -1,4 +1,4 @@
-function [convergance_flag,delta_e_nl_conv,e_nl_conv,delta_m_bar,increment,J, dofs_stored, residual_norm, g_constraint,Res_F_E_rct,Res_F_F,iteration, history_var_mat_conv, strain_var_mat_conv, gausspoints_prop_mat, nodes_prop_mat,Reactions_x, Reactions_y,delta_m_bar_conv,delta_u_bar_conv,delta_u_f_conv,delta_f_rct_disp_ebc_conv,m_bar_conv,u_bar_conv,u_f_conv,f_rct_disp_ebc_conv,ArcLength,Load_percentage_last_saved] = func_UnifiedArcLength_DispControl(model_name,g_constraint,Res_F_E_rct,Res_F_F,Constraint_type,strain_var_mat_conv,tolerance,Load_percentage_last_saved,main_file_path,save_path,ArcLength_0,Applied_Displacement_Load,delta_m_bar_conv,delta_u_bar_conv,delta_u_f_conv,delta_f_rct_disp_ebc_conv,m_bar_conv,u_bar_conv,u_f_conv,f_rct_disp_ebc_conv,ArcLength,delta_m_bar_0,dofs_stored,fixnodes_applied,increment,Delastic,history_var_mat_conv,num_elem_at_node,n_hood,weights,Scheme_ID,strain_tolerance,IsProj,RoutineID,delta_m_bar,ID_dofs_list_u_p,ID_dofs_list_u_f,ID_dofs_list_nl_strain,ID_dofs_list_disp,ID_free_nodes_e,ID_prescribed_nodes_e,delta_e_nl_conv,e_nl_conv,convergance_flag)
+function [convergance_flag,delta_e_nl_conv,e_nl_conv,delta_m_bar,increment,J, dofs_stored, residual_norm, g_constraint,Res_F_E_rct,Res_F_F,iteration, history_var_mat_conv, strain_var_mat_conv, gausspoints_prop_mat, nodes_prop_mat,Reactions_x, Reactions_y,delta_m_bar_conv,delta_u_bar_conv,delta_u_f_conv,delta_f_rct_disp_ebc_conv,m_bar_conv,u_bar_conv,u_f_conv,f_rct_disp_ebc_conv,ArcLength,Load_percentage_last_saved] = func_UnifiedArcLength_DispControl(Damage_type,k_damage_parameter,eq_strain_type,g_constraint,Res_F_E_rct,Res_F_F,Constraint_type,strain_var_mat_conv,tolerance,Load_percentage_last_saved,main_file_path,save_path,ArcLength_0,Applied_Displacement_Load,delta_m_bar_conv,delta_u_bar_conv,delta_u_f_conv,delta_f_rct_disp_ebc_conv,m_bar_conv,u_bar_conv,u_f_conv,f_rct_disp_ebc_conv,ArcLength,delta_m_bar_0,dofs_stored,fixnodes_applied,increment,Delastic,history_var_mat_conv,num_elem_at_node,n_hood,weights,Scheme_ID,strain_tolerance,IsProj,RoutineID,delta_m_bar,ID_dofs_list_u_p,ID_dofs_list_u_f,ID_dofs_list_nl_strain,ID_dofs_list_disp,ID_free_nodes_e,ID_prescribed_nodes_e,delta_e_nl_conv,e_nl_conv,convergance_flag,reaction_calc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ======================= UNIFIED ARCLENGTH METHOD ========================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,7 +49,7 @@ if IsProj == 0
     [~, u_bar, u_f,~,ID_dofs_list_at_ebc,ID_dofs_list_at_nbc] = func_partitiond(fixnodes_applied, dofs);
 
     % Calculate Beta
-    [Beta] = func_calc_Beta(Constraint_type,model_name,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj);
+    [Beta] = func_calc_Beta(Constraint_type,eq_strain_type,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
 
     while residual_norm>tolerance
 
@@ -57,7 +57,7 @@ if IsProj == 0
         iteration = iteration+1;
 
         % Evaluate consistent tangent matrix [J] and history variable matrix at the start of the increment
-        [~,J, ~, ~, ~, ~, ~, ~,~,~] = parallel_func_globalstiffness(model_name,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
+        [~,J, ~, ~, ~, ~, ~, ~,~,~] = func_globalstiffness(Damage_type,k_damage_parameter,eq_strain_type,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
 
         % Partition the consistent tangent matrix
         [J_E, J_EF, J_FE, J_F, ~, ~, ~, ~] = func_partitionK(fixnodes_applied, J);
@@ -158,7 +158,7 @@ if IsProj == 0
 
 
         % Evaluate consistent tangent matrix [J] and history variable matrix at the current iteration
-        [~,J, ~, Res_F, ~,~,history_var_mat,~,~,strain_var_mat] = parallel_func_globalstiffness(model_name,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
+        [~,J, ~, Res_F, ~,~,history_var_mat,~,~,strain_var_mat] = func_globalstiffness(Damage_type,k_damage_parameter,eq_strain_type,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
         [~, Res_F_E, Res_F_F] = func_partitionf(fixnodes_applied,Res_F);
         Res_F_E_rct=Res_F_E+f_rct_disp_ebc;
 
@@ -200,10 +200,10 @@ if IsProj == 0
             if (residual_norm(iteration) < tolerance)
                 % Calcualte Reactions based on the geometry of your domain and boundary conditions
                 f_ext_E=f_rct_disp_ebc;
-                if  model_name=='SSNT_Coarse' || model_name=='SSNT_Medium' || model_name=='SSNT_Fine' || model_name=='SNS' || model_name=='TNT'
+                if  reaction_calc == 1
                     Reactions_x = sum(abs(f_ext_E(fixnodes_applied(2,:) == 1 & fixnodes_applied(3,:) == 0)));
                     Reactions_y = sum(abs(f_ext_E(fixnodes_applied(2,:) == 2 & fixnodes_applied(3,:) == 0)));
-                elseif model_name=='SNT'
+                elseif reaction_calc == 2
                     Reactions_x = sum(abs(f_ext_E(fixnodes_applied(2,:) == 1 & fixnodes_applied(3,:) ~= 0)));
                     Reactions_y = sum(abs(f_ext_E(fixnodes_applied(2,:) == 2 & fixnodes_applied(3,:) ~= 0)));
                 end
@@ -264,7 +264,7 @@ elseif IsProj == 1
     [convergance_flag,delta_e_nl_conv,e_nl_conv,delta_m_bar,increment,J, dofs_stored, residual_norm, g_constraint,Res_F_E_rct,Res_F_F,iteration, history_var_mat_conv, strain_var_mat_conv, gausspoints_prop_mat, nodes_prop_mat,Reactions_x, Reactions_y,delta_m_bar_conv,delta_u_bar_conv,delta_u_f_conv,delta_f_rct_disp_ebc_conv,m_bar_conv,u_bar_conv,u_f_conv,f_rct_disp_ebc_conv,ArcLength,Load_percentage_last_saved] = deal([]);
 
     % Compute element/nodal properties
-    [~, ~, ~, ~, ~, ~, ~, gausspoints_prop_mat, nodes_prop_mat,~] = parallel_func_globalstiffness(model_name,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
+    [~, ~, ~, ~, ~, ~, ~, gausspoints_prop_mat, nodes_prop_mat,~] = func_globalstiffness(Damage_type,k_damage_parameter,eq_strain_type,dofs,Delastic,history_var_mat_previousinc,num_elem_at_node,n_hood,weights,strain_tolerance,strain_var_mat_previousinc,IsProj,RoutineID);
 
 else
 
@@ -273,5 +273,3 @@ else
 end
 
 end
-
-
