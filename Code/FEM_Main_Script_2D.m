@@ -399,4 +399,10 @@ if RoutineID == 2
         end
 
     end
+  
+    total_code_run_time = toc  % stop time counter for total time and save
+    cd (save_path)
+    save(file_name,"total_code_run_time", "-append"); % save time in output file
+    cd (main_file_path)
+
 end
