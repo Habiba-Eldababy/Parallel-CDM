@@ -390,7 +390,7 @@ if RoutineID == 2
         % ----------------- PLOTTING PROPERTIES ROUTINE -------------------
         % -----------------------------------------------------------------
 
-        if (last_iteration ~= max_accept_iter) && (loadfactor > loadfactor_plot_threshold) % (rem(increment,increment_plot_threshold) == 0)
+        if (last_iteration ~= max_accept_iter) && (loadfactor > loadfactor_plot_threshold)
             IsProj = 1;
             [~, ~, ~, ~, ~, ~, gausspoints_prop_mat, nodes_prop_mat, ~, ~] = func_NewtonRaphson_DispControl(Damage_type,k_damage_parameter,eq_strain_type, RoutineID, dofs, [fixnodes(1:2,:); fixnodes(3,:)*loadfactor], increment, Delastic, history_var_mat_stored, num_elem_at_node, n_hood, weights, tolerance, IsProj,reaction_calc);
                                                       
