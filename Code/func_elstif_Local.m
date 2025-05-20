@@ -1,4 +1,4 @@
-function [k_el, j_el, damage_el, local_strain_el, gausspoints_prop_mat_elem, nodes_prop_mat_elem, residual_el, f_internal_el, f_external_el] = func_elstif_Local(model_name,lmncoord,dofs,Delastic,damage_mat_previousinc,alpha_val,beta_val,e_delta,dmax,n_hood,weights,strain_tolerance,strain_mat_previousinc,IsM,IsProj,RoutineID)
+function [k_el, j_el, damage_el, local_strain_el, gausspoints_prop_mat_elem, nodes_prop_mat_elem, residual_el, f_internal_el, f_external_el] = func_elstif_Local(Damage_type, nu, k_damage_parameter,eq_strain_type,lmncoord,dofs,Delastic,damage_mat_previousinc,alpha_val,beta_val,e_delta,dmax,n_hood,weights,strain_tolerance,strain_mat_previousinc,IsM,IsProj,RoutineID)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ============ ELEMENT STIFFNESS MATRIX & INTERNAL FORCE VECTOR ===========
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,11 +61,14 @@ if IsProj == 0
         gxy = strain_vec_gxy(3,1);
         
         % Calculate the equivalent strain e_star
-        if model_name =='SNS'
-            [e_star,s] = func_estar_shear(exx, eyy, gxy);
-        else
-            [e_star,s] = func_estar(exx, eyy, gxy);
+        if eq_strain_type == 1
+            [e_star, s] = func_estar(exx, eyy, gxy);
+        elseif eq_strain_type == 2
+            [e_star, s] = func_estar_shear(exx, eyy, gxy);
+        elseif eq_strain_type == 3
+            [e_star, s] = func_estar_deVree(exx, eyy, gxy, k_damage_parameter, nu);
         end
+
         local_strain_el(1,integ_point) = e_star;
 
         % Add NaN condition for [s]
@@ -215,10 +218,12 @@ residual_el   = [];
         exy = gxy/2;
 
         % Calculate the equivalent strain e_star
-        if model_name =='SNS'
-            [e_star,~] = func_estar_shear(exx, eyy, gxy);
-        else
-            [e_star,~] = func_estar(exx, eyy, gxy);
+        if eq_strain_type == 1
+            [e_star, ~] = func_estar(exx, eyy, gxy);
+        elseif eq_strain_type == 2
+            [e_star, ~] = func_estar_shear(exx, eyy, gxy);
+        elseif eq_strain_type == 3
+            [e_star, ~] = func_estar_deVree(exx, eyy, gxy, k_damage_parameter, nu);
         end
         local_strain_el(1,integ_point) = e_star;
 
