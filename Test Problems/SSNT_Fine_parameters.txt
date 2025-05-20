@@ -15,24 +15,35 @@ lc:						5
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %________Loading_parameters_________
-increment: 				1                    
+increment: 				    1                    
 inc_success_counter:		1          
-min_iter:				5                     
-max_iter:				12                    
+min_iter:				    5                     
+max_iter:				    12                    
 max_accept_iter:			30             
-loadfactor:				0.005          
-dlfactor:				0.005
+loadfactor:				    0.005         
+dlfactor:				    0.005
 dlfactor_incr_threshold:	0.005
 increment_plot_threshold:	3     
 loadfactor_plot_threshold:	0.819
-flaglf:				false                   
-countflaglf:			0                  
-incrflag:				1                    
-flagplot:				1
-ArcLength_0:			1e-4
-Constraint_type:			1
-delta_m_bar_0:			1e-3
-Applied_Force_Load:           1.2
+flaglf:				        false                   
+countflaglf:			    0                  
+incrflag:				    1                    
+flagplot:				    1
+ArcLength_0:			    1e-4
+Constraint_type:	        1
+delta_m_bar_0:			    1e-3
+Applied_Force_Load:         1.2
+tolerance:                  1e-8
+ArcLength_upper_limit:      1e-2
+ArcLength_lower_limit:      1e-24
+Scheme_ID:                  1 
+ST:                         1e-6
+max_failed_attempts:        15
+direction_load:             2
+reaction_calc:              1
+eq_strain_type:             1
+Damage_type                 1
+k_damage_parameter          10
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %_________Number_of_domains_________
