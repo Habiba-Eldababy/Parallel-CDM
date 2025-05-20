@@ -36,7 +36,7 @@ In order for the user to implement our code on one of the provided benchmark pro
 2. Download the `Code` and `Test Problems` folders.
 3. Open the `SSNT_Coarse_parameter.txt` file and adjust the parameters according to their desired setup (see “VII. Details of parameter files” for details). 
 4. Ensure the correct mesh filename (`SSNT_Coarse_mesh.txt`) is referenced at the last line of the parameter file.
-5. Copy the mesh and parameter files to the `Code` folder.
+5. Copy the mesh and parameter files from the `Test Problems` folder to the `Code` folder.
 6. Within the `Code` folder, create the `Saved Files` and `Images` folders.
 7. Open the `FEM_Main_Script_2D.m` file and update the following:
     - `main_file_path` with the directory of the `Code` folder (line 13)
