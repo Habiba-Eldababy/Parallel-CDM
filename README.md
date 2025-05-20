@@ -1,12 +1,13 @@
 # Parallel-CDM
 
-This repository contains a parallel computational damage mechanics (CDM) MATLAB code. We utilize parallelization techniques in order to significantly accelerate CDM simulations. This an updated parallel code, see the original https://github.com/roshanphilip/UAL-codes. The package can be used with UAL solver (https://doi.org/10.1007/s00466-024-02473-5) or Newton-Raphson, and for local or non-local gradient damage. The mesh files are set to the UAL solver and non-local gradient damage by default.
+This repository contains a MATLAB-based code and the relevant documentation to solve Computational Damage Mechanics (CDM) problems in parallel. This is a significantly enhanced and updated version of a serial-based CDM code published [here](https://github.com/roshanphilip/UAL-codes). The repo contains the following folders:
 
-We invite you to try out different continuum damage mechanics problems using this parallel code.
+**a)	Paper:** contains the article files  <br /> 
+**b)	Code:** contains all the code files  <br /> 
+**c)	Documentation:** contains a document with a thorough explanation of the code functionalities, limitations, how-to-run instructions, and more. <br /> 
+**d)	Test Problems:** contains the mesh details and hyperparameters for several benchmark problems <br /> 
 
-Steps to run the code:
-1. Download code and mesh files. To change the problem parameters, open the corresponding parameter file of the mesh and adjust. Create a folder to save the data files at each increment.
-2. Open main script file - "FEM_Main_Script_2D.m"
-3. Enter the file path and results storage folder path
-4. Create parallel threads pool depending on your machine or leave default pool initialization.
-5. Run main script file - "FEM_Main_Script_2D.m". The code outputs data files at each increment and a final plot of the damage contours.
+We invite you to explore our parallel-based code to substantially accelerate computationally intensive CDM simulations. We welcome contributions from the community – a list of potential aspects for improvement are listed in the associated Documentation file (see Section IX). For further instructions or inquiries, please contact:  <br /> 
+
+* Habiba Eldababy (hed279@nyu.edu)  <br /> 
+* Mostafa Mobasher (mm11504@nyu.edu) <br /> 
