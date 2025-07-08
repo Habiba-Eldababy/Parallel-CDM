@@ -142,7 +142,7 @@ Here we summarize and briefly explain the primary parameters which are pertinent
 This test replicates the L = 50 mm configuration of the classical direct tension experiment presented in Peerlings et al. (1998). The mesh and parameter setup are found in the folder “Test Problems” as well as in the main code folder.
 
 ### i.	Purpose
-The objective of this test is to ensure that the core functionalities of the software are working correctly and can be validated after any modification or extension. For instance, if a user decides to extend the code to 3D or implement new features, this benchmark serves as a regression test to confirm that the original functionality remains unaffected.
+The objective of this test is to ensure that the core functionalities of the software are working correctly and can be validated after any modification or extension. For instance, if a user decides to implement new features, this benchmark serves as a regression test to confirm that the original functionality remains unaffected.
 The test runs the simulation and checks the resulting force-displacement curve against a reference solution. The max force error and L2 norm between the two curves is calculated, and if the error falls within an acceptable error tolerance, the test is marked as "passed." 
 
 ### ii.	Required Files
