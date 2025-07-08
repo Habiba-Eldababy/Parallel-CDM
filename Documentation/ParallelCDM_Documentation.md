@@ -15,7 +15,7 @@ This code requires **MATLAB** and the **Parallel Computing Toolbox** to be insta
 
 ## III. Code structure
 
-The code is a compilation of several `.m` files. The main script is `FEM_Main_Script_2D.m`, which is the only code‐related file the user needs to open and edit. In this file the user specifies the <ins>working/saving directories</ins> (line 13) and the <ins>model name</ins> (line 16). This file then calls the solver (Newton‐Raphson or UAL) and the analysis starts.
+The code is a compilation of several `.m` files. The main script is `FEM_Main_Script_2D.m`, which is the only code‐related file the user needs to open and edit. In this file the user specifies the <ins>working/saving directories</ins> (line 12) and the <ins>model name</ins> (line 15). This file then calls the solver (Newton‐Raphson or UAL) and the analysis starts.
 
 Each file named `func____.m` serves a specific purpose, and a brief description of its functionality is provided at the beginning of the file. The overall code follows a typical FEM workflow (element‐level procedures, assembly to global matrices, solution for unknown degrees of freedom).
 
