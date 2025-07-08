@@ -29,7 +29,7 @@ Each model is fully defined in two `.txt` files: a mesh file (`modelName_mesh.tx
 - Element connectivity  
 - Imposed Dirichlet boundary conditions  
 
-The parameter file contains several hyperparameters of the problem, and they are presented in detail below (see Section “VII. Details of parameter files”). **The parameter file must reference the associated mesh file.** This occurs at the last line of the parameter file, which links to the appropriate mesh file.
+The parameter file contains several hyperparameters of the problem, and they are presented in detail below (see Section “VI. Details of parameter files”). **The parameter file must reference the associated mesh file.** This occurs at the last line of the parameter file, which links to the appropriate mesh file.
 
 To facilitate the user’s understanding of the model files, we provide in the **"Test Problems"** folder the files for 4 sample cases: **Symmetric Single Notch Tension (SSNT)** with Coarse, Intermediate and Fine mesh resolution (following [5]), and a **Direct Tension Test** (Double‐notch) following Peerlings et al. [6]. The user should create files that follow the structure of these benchmarks.
 
@@ -75,7 +75,7 @@ In order for the user to implement our code on one of the provided benchmark pro
 
 1. Ensure MATLAB and the Parallel Computing Toolbox are installed.
 2. Download the `Code` and `Test Problems` folders.  
-3. Open the `SSNT_Coarse_parameter.txt` file and adjust the parameters according to their desired setup (see “VII. Details of parameter files” for details).  
+3. Open the `SSNT_Coarse_parameter.txt` file and adjust the parameters according to their desired setup (see “VI. Details of parameter files” for details).  
 4. Ensure the correct mesh filename (`SSNT_Coarse_mesh.txt`) is referenced at the last line of the parameter file.  
 5. Copy the mesh and parameter files from the `Test Problems` to the `Code` folder.  
 6. Within the `Code` folder, create the `Saved Files` and `Images` folders.  
