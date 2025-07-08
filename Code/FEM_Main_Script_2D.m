@@ -1,19 +1,18 @@
 tic; % start timer for total code run time
-
-clc
-clear
-close all
+clc; clear; close all;
 format compact
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %============================ USER INPUTS ================================%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% This code is compatible with MATLAB version R2022b and later.
+
 % Enter location of current file path
 main_file_path='';                   % Enter the file path of the Code folder here
 
 % Enter your model name
-model_name = "SSNT_Coarse";          % Enter the mesh name here
+model_name = "";          % Enter the mesh name here
 pool_type = 'Threads';               % Type of parallel pool [enter 'Threads' or 'Processes']
 n_threads = 3;                       % No. of parallel threads [Depends on number of cores in the user device] (Default: 3)
 
