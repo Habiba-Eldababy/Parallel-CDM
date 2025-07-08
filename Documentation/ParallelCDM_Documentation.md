@@ -19,7 +19,7 @@ The code is a compilation of several `.m` files. The main script is `FEM_Main_Sc
 
 Each file named `func____.m` serves a specific purpose, and a brief description of its functionality is provided at the beginning of the file. The overall code follows a typical FEM workflow (element‐level procedures, assembly to global matrices, solution for unknown degrees of freedom).
 
-The analysis generates output data at each load increment, which are stored in the `Saved_Files` folder. It also prints contour plots for damage, local strain, and nonlocal strain at the last load increment, which are stored in the `Images` folder.
+The analysis generates output data at each load increment, which are stored in the `Saved Files` folder. It also prints contour plots for damage, local strain, and nonlocal strain at the last load increment, which are stored in the `Images` folder.
 
 ## IV. Model files structure
 
