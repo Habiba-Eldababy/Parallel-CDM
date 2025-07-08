@@ -196,7 +196,7 @@ MATLAB’s Parallel Computing Toolbox allows parallel execution in two distinct 
 
 1. Thread-Based Environment (default in code)
     - Tasks run directly on shared data.
-    - Faster than process-based due to minimal data duplication, especially for coarse-to-medium mesh sizes.
+    - Faster than process-based due to minimal data duplication.
 2. Process-Based Environment
     - Data is copied to separate memory locations for each task.
     - Overhead increases with memory use and mesh size. 
@@ -204,7 +204,7 @@ MATLAB’s Parallel Computing Toolbox allows parallel execution in two distinct 
 
 <div align="center">
   <img src="./Images/threads_vs_processes_coarse_dell.png" alt="Threads vs Processes" width="400" />
-  <p><em>Figure 5. Time for first 5 iterations of the `func_globalstiffness` function  in serial, parallel process based, and parallel thread-based runs using the UAL solver.
+  <p><em>Figure 5. Time for first 5 iterations of the `func_globalstiffness` function  in serial, parallel process-based, and parallel thread-based runs using the UAL solver.
 </em></p>
 </div>
 
@@ -213,11 +213,11 @@ MATLAB’s Parallel Computing Toolbox allows parallel execution in two distinct 
 
 
 ### iii. Device Comparison
-The runtime of the code on the 3 devices is compared using the thread-based environment to demonstrate the scaling of computational savings at smaller mesh sizes, addressing the common issue of parallel code portability across different computing devices. The results are shown in Figure 5.
+The runtime of the code on the 3 devices is compared using the thread-based environment to demonstrate the scaling of computational savings at smaller mesh sizes, addressing the common issue of parallel code portability across different computing devices. The results are shown in Figure 6.
 
 <ins>**Key findings:**<ins>
 - We observe that the laptop is considerably faster than the workstation for the coarse mesh, but as the mesh size increases the workstation becomes more efficient. 
-- We also observe from Figure 5 that with larger mesh sizes and additional threads, the memory is a limiting factor such that the workstation is more suitable than the laptop due to the larger memory capacity.
+- We also observe from Figure 6 that with larger mesh sizes and additional threads, the memory is a limiting factor such that the workstation is more suitable than the laptop due to the larger memory capacity.
 These trends reflect the importance of balancing mesh size, memory availability, and parallel worker count for optimal runtime efficiency.
 <br>
 
