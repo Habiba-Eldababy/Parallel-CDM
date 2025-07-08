@@ -135,7 +135,7 @@ Here we summarize and briefly explain the primary parameters which are pertinent
 - For nonlocal gradient damage, the user must confirm that the associated length scale parameters and mesh refinements are appropriate to capture the damage gradient accurately.
 - If the numerical solution doesn’t converge, consider adjusting `max_failed_attempts`, `tolerance`, or `ST` values to allow for better convergence behavior.
 - Always verify that boundary conditions are correctly imposed, particularly if `reaction_calc = 2` (for non-zero Dirichlet boundaries).
-- MATLAB parallelization can be run either as processes-based or thread-based. Our investigations have indicated that threads-based is optimal (see section X.ii.). so we have set it as the default in the code. To use the processes-based environment, the user should go to line 17 in the user inputs part of the “FEM_Main_Script_2D.m” file and replace 'Threads' with 'Processes'. The number of parallel threads to be used can be modified according to the available hardware capabilities of the user’s device (default: 3) and can be changed in the following line.
+- MATLAB parallelization can be run either as processes-based or thread-based. Our investigations have indicated that threads-based is optimal (see section IX.ii.). so we have set it as the default in the code. To use the processes-based environment, the user should go to line 17 in the user inputs part of the “FEM_Main_Script_2D.m” file and replace 'Threads' with 'Processes'. The number of parallel threads to be used can be modified according to the available hardware capabilities of the user’s device (default: 3) and can be changed in the following line.
 
 ## VIII. Direct Tension Software Test
 
