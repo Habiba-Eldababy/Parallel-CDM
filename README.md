@@ -3,9 +3,9 @@
 This repository contains a MATLAB-based code and the relevant documentation to solve Computational Damage Mechanics (CDM) problems in parallel. This is a significantly enhanced and updated version of a serial-based CDM code published [here](https://github.com/roshanphilip/UAL-codes). The repo contains the following folders:
 
 **a)	Paper:** contains the article files  <br /> 
-**b)	Code:** contains all the code files  <br /> 
-**c)	Documentation:** contains a document with a thorough explanation of the code functionalities, limitations, how-to-run instructions, and more. <br /> 
-**d)	Test Problems:** contains the mesh details and hyperparameters for several benchmark problems <br /> 
+**b)	Code:** contains all the [code files](https://github.com/Habiba-Eldababy/Parallel-CDM/tree/main/Code)  <br /> 
+**c)	Documentation:** contains a [document](https://github.com/Habiba-Eldababy/Parallel-CDM/blob/main/Documentation/ParallelCDM_Documentation.md) with a thorough explanation of the code functionalities, limitations, how-to-run instructions, and more. <br /> 
+**d)	Test Problems:** contains the mesh details and hyperparameters for several [benchmark problems](https://github.com/Habiba-Eldababy/Parallel-CDM/tree/main/Test%20Problems)<br /> 
 
 We invite you to explore our parallel-based code to substantially accelerate computationally intensive CDM simulations. We welcome contributions from the community – a list of potential aspects for improvement are listed in the associated Documentation file (see Section X). For further instructions or inquiries, please contact:  <br /> 
 
