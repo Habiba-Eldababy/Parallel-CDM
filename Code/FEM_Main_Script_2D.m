@@ -25,6 +25,17 @@ save_path = strcat(main_file_path,'\Saved Files');
 % Path of image storage folder
 image_path =strcat(main_file_path,'\Images');            
 
+% Ensure the output folders exist and are empty
+folder_list = {save_path, image_path};
+for k = 1:length(folder_list)
+    folder = folder_list{k};
+    if ~exist(folder, 'dir')
+        mkdir(folder); % Create if it does not exist
+    else
+        delete(fullfile(folder, '*')); % Delete contents from previous runs
+    end
+end
+
 % =========================================================================
 % ============================== IMPORTANT ===============================%
 % =========================================================================
