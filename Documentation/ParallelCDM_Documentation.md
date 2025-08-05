@@ -81,7 +81,7 @@ In order for the user to implement our code on one of the provided benchmark pro
 6. Within the `Code` folder, create the `Saved Files` and `Images` folders.  
 7. Open the `FEM_Main_Script_2D.m` file and update the following:  
    - `main_file_path` with the directory of the `Code` folder (line 13)  
-   - `model_name` with the mesh file to run (line 16)  
+   - `model_name` with the name of the model to run, which is "SSNT_Coarse" in this example (line 16)  
 8. Run the `FEM_Main_Script_2D.m`.
 
 ## VI. Details of parameter files
