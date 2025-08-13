@@ -1,0 +1,40 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Eldababy
+  given-names: Habiba
+  orcid: "https://orcid.org/0009-0005-1659-9411"
+- family-names: Saji
+  given-names: Roshan Philip
+- family-names: Pantidis
+  given-names: Panos
+- family-names: Mobasher
+  given-names: Mostafa
+doi: 10.5281/zenodo.16790622
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Eldababy
+    given-names: Habiba
+    orcid: "https://orcid.org/0009-0005-1659-9411"
+  - family-names: Saji
+    given-names: Roshan Philip
+  - family-names: Pantidis
+    given-names: Panos
+  - family-names: Mobasher
+    given-names: Mostafa
+  date-published: 2025-08-13
+  doi: 10.21105/joss.07610
+  issn: 2475-9066
+  issue: 112
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 7610
+  title: "Parallel-CDM: Parallel Implementation of Continuum Damage
+    Mechanics Simulations using FEM and MATLAB"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.07610"
+  volume: 10
+title: "Parallel-CDM: Parallel Implementation of Continuum Damage
+  Mechanics Simulations using FEM and MATLAB"
