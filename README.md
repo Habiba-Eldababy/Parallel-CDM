@@ -1,5 +1,5 @@
-# Parallel-CDM
-
+# Parallel-CDM 
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.07610/status.svg)](https://doi.org/10.21105/joss.07610) <br />
 This repository contains a MATLAB-based code and the relevant documentation to solve Computational Damage Mechanics (CDM) problems in parallel. This is a significantly enhanced and updated version of a serial-based CDM code published [here](https://github.com/roshanphilip/UAL-codes). The repo contains the following folders:
 
 **a)	Paper:** contains the article files  <br /> 
