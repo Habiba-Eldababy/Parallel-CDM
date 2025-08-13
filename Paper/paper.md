@@ -1,5 +1,5 @@
 ---
-title: 'Parallel Implementation of Continuum Damage Mechanics Simulations using FEM and MATLAB'
+title: 'Parallel-CDM: Parallel Implementation of Continuum Damage Mechanics Simulations using FEM and MATLAB'
 tags:
   - parallel computing
   - MATLAB
@@ -59,4 +59,5 @@ This work was partially supported by the Sand Hazards and Opportunities for Resi
 # References
 ::: {#refs .references}
 :::
+
 
